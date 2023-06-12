@@ -1,0 +1,7 @@
+*/.idea
+*/.vscode
+
+/jetBrains-plugin/build/*
+/jetBrains-plugin/.gradle
+/jetBrains-plugin/.run
+
