@@ -59,20 +59,23 @@ export function activate(context: vscode.ExtensionContext) {
 
 function getWebviewContent(jsUrl: string) {
   return `<!DOCTYPE html>
-		  <html lang="en">
+		<html lang="en">
 			<head>
 			  <meta charset="UTF-8">
 			  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-			  <title>Cat Coding</title>
+			  <title>Doraemon</title>
+
+        <script>
+          localStorage.setItem('doraemon_global_config', 'https://gadgets-server-mss-dev.marmot-cloud.com/config.json')
+        </script>
 			  <script defer="defer" src="${jsUrl}"></script>
 			</head>
+
 			<body>
-			
-			<div id="gadgetContainer"></div>
-			<div id="root"></div>
-			
+        <div id="gadgets-container"/>
+        <div id="root"/>
 			</body>
-		  </html>`
+	  </html>`
 }
 
 
