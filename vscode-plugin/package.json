@@ -14,16 +14,34 @@
   "contributes": {
     "commands": [
       {
-        "command": "vscode-plugin.helloWorld",
-        "title": "Hello World"
+        "command": "doraemon.webview",
+        "title": "Doraemon"
       }
     ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "editorTextFocus",
+          "command": "doraemon.webview",
+          "group": "cursor-menu"
+        }
+      ]
+    },
     "viewsContainers": {
       "activitybar": [
         {
           "id": "doraemon",
           "title": "Doraemon",
           "icon": "resources/logo.svg"
+        }
+      ]
+    },
+    "views": {
+      "doraemon": [
+        {
+          "type": "webview",
+          "id": "doraemon.webview",
+          "name": "Doraemon"
         }
       ]
     }

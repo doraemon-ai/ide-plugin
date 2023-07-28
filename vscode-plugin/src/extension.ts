@@ -1,7 +1,8 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode'
-import path from 'node:path'
+import * as vscode from 'vscode';
+import path from 'node:path';
+import { WebviewProvider } from './WebviewProvider'
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -9,10 +10,24 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Use the console to output diagnostic information (console.log) and errors (console.error)
   // This line of code will only be executed once when your extension is activated
-  console.log('Congratulations, your extension "vscode-plugin" is now active!')
+  console.log('Congratulations, your extension "vscode-plugin" is now active!');
 
-  let disposable = vscode.commands.registerCommand('vscode-plugin.helloWorld', () => {
-    vscode.window.showInformationMessage('Hello World from my-vscode-extendsion!')
+  const provider = new WebviewProvider(
+    context.extensionUri,
+    context.extensionPath
+  );
+
+  const webviewDispose = vscode.window.registerWebviewViewProvider(
+    "doraemon.webview",
+    provider,
+    {
+      webviewOptions: { retainContextWhenHidden: true },
+    }
+  );
+
+  let disposable = vscode.commands.registerCommand('doraemon.generation', () => {
+    // 展示message通知
+    // vscode.window.showInformationMessage('Hello World from my-vscode-extendsion!')
 
     const panel = vscode.window.createWebviewPanel(
       'doraemon',
@@ -22,39 +37,39 @@ export function activate(context: vscode.ExtensionContext) {
         retainContextWhenHidden: true, // 保证 Webview 所在页面进入后台时不被释放
         enableScripts: true, // 运行 JS 执行
       },
-    )
+    );
 
-    const isProduction = context.extensionMode === vscode.ExtensionMode.Production
+    const isProduction = context.extensionMode === vscode.ExtensionMode.Production;
 
-    let srcUrl = ''
+    let srcUrl = '';
 
     if (false) {
       const filePath = vscode.Uri.file(
         path.join(context.extensionPath, 'dist', 'static/js/main.js'),
-      )
-      srcUrl = panel.webview.asWebviewUri(filePath).toString()
+      );
+      srcUrl = panel.webview.asWebviewUri(filePath).toString();
     } else {
-      srcUrl = 'http://localhost:3000/static/js/bundle.js'
+      srcUrl = 'http://localhost:3000/static/js/bundle.js';
     }
-    panel.webview.html = getWebviewContent(srcUrl)
+    panel.webview.html = getWebviewContent(srcUrl);
 
     const updateWebview = () => {
-      panel.webview.html = getWebviewContent(srcUrl)
-    }
+      panel.webview.html = getWebviewContent(srcUrl);
+    };
 
-    updateWebview()
-    const interval = setInterval(updateWebview, 1000)
+    updateWebview();
+    const interval = setInterval(updateWebview, 1000);
 
     panel.onDidDispose(
       () => {
-        clearInterval(interval)
+        clearInterval(interval);
       },
       null,
       context.subscriptions,
-    )
-  })
+    );
+  });
 
-  context.subscriptions.push(disposable)
+  context.subscriptions.push(webviewDispose);
 }
 
 function getWebviewContent(jsUrl: string) {
@@ -75,7 +90,7 @@ function getWebviewContent(jsUrl: string) {
         <div id="gadgets-container"></div>
         <div id="doraemon-root"/></div>
 			</body>
-	  </html>`
+	  </html>`;
 }
 
 
