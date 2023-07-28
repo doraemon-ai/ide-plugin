@@ -15,8 +15,8 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.window.showInformationMessage('Hello World from my-vscode-extendsion!')
 
     const panel = vscode.window.createWebviewPanel(
-      'catCoding',
-      'Cat Coding',
+      'doraemon',
+      'Doraemon',
       vscode.ViewColumn.One,
       {
         retainContextWhenHidden: true, // 保证 Webview 所在页面进入后台时不被释放
@@ -72,8 +72,8 @@ function getWebviewContent(jsUrl: string) {
 			</head>
 
 			<body>
-        <div id="gadgets-container"/>
-        <div id="root"/>
+        <div id="gadgets-container"></div>
+        <div id="doraemon-root"/></div>
 			</body>
 	  </html>`
 }
