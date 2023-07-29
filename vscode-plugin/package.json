@@ -15,15 +15,22 @@
     "commands": [
       {
         "command": "doraemon.webview",
+        "remark": "注册显示webview的command",
         "title": "Doraemon"
+      },
+      {
+        "command": "doraemon.rightMenu",
+        "remark": "注册右键菜单的command",
+        "title": "Doraemon AI"
       }
     ],
     "menus": {
       "editor/context": [
         {
           "when": "editorTextFocus",
-          "command": "doraemon.webview",
-          "group": "cursor-menu"
+          "command": "doraemon.rightMenu",
+          "remark": "当编辑框被选中时，显示右键菜单",
+          "group": "AI"
         }
       ]
     },
@@ -32,7 +39,7 @@
         {
           "id": "doraemon",
           "title": "Doraemon",
-          "icon": "resources/logo.svg"
+          "icon": "resources/doraemon.svg"
         }
       ]
     },
@@ -58,19 +65,24 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/vscode": "^1.78.0",
     "@types/glob": "^8.1.0",
+    "@types/lodash": "^4.14.196",
     "@types/mocha": "^10.0.1",
     "@types/node": "16.x",
+    "@types/vscode": "^1.78.0",
     "@typescript-eslint/eslint-plugin": "^5.59.1",
     "@typescript-eslint/parser": "^5.59.1",
+    "@vscode/test-electron": "^2.3.0",
     "eslint": "^8.39.0",
     "glob": "^8.1.0",
     "mocha": "^10.2.0",
-    "typescript": "^5.0.4",
     "ts-loader": "^9.4.2",
+    "typescript": "^5.0.4",
     "webpack": "^5.81.0",
-    "webpack-cli": "^5.0.2",
-    "@vscode/test-electron": "^2.3.0"
+    "webpack-cli": "^5.0.2"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "lodash": "^4.17.21"
   }
 }
