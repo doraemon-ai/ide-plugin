@@ -51,6 +51,21 @@
           "name": "Doraemon"
         }
       ]
+    },
+    "configuration": {
+      "title": "DoraemonConfig",
+      "properties": {
+        "doraemon.globalConfig": {
+          "type": "string",
+          "default": "https://raw.githubusercontent.com/doraemon-ai/4th-dimensional-pocket/main/config.json",
+          "description": "配置文件的地址"
+        },
+        "doraemon.javascript": {
+          "type": "string",
+          "default": "http://localhost:3000/static/js/bundle.js",
+          "description": "JS文件的地址"
+        }
+      }
     }
   },
   "scripts": {

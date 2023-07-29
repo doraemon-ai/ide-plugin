@@ -12,6 +12,10 @@ export class WebviewProvider implements vscode.WebviewViewProvider {
 
   private readonly _htmlTemplate: string
 
+  private _globalConfig: string
+
+  private _javascript: string
+
   private readonly _callback: {
     onRegisterContextMenus: (menus: IContextMenu[]) => void,
     onUnRegisterContextMenus: (menus: IContextMenu[]) => void,
@@ -25,6 +29,12 @@ export class WebviewProvider implements vscode.WebviewViewProvider {
       onUnRegisterContextMenus: (menus: IContextMenu[]) => void,
     },
   ) {
+    // 获取配置项
+    const config = vscode.workspace.getConfiguration('doraemon');
+    // 获取配置项中的文本
+    this._globalConfig = config.get('globalConfig') as string ?? 'https://raw.githubusercontent.com/doraemon-ai/4th-dimensional-pocket/main/config.json'
+    this._javascript = config.get('javascript') as string
+
     this._htmlTemplate = this.modifyTemplate(htmlTemplate)
     this._callback = registerCallback
   }
@@ -33,16 +43,20 @@ export class WebviewProvider implements vscode.WebviewViewProvider {
    * 修改html的模板内容
    */
   private modifyTemplate(htmlTemplate: string) {
-    // 替换成本地js文件
-    htmlTemplate = htmlTemplate.replace(
-      'https://doraemon-ai.vercel.app/static/js/main.fe9fd396.js',
-      'http://localhost:3000/static/js/bundle.js',
-    )
+    if (this._javascript) {
+      // 替换js文件
+      htmlTemplate = htmlTemplate.replace(
+        'https://doraemon-ai.vercel.app/static/js/main.fe9fd396.js',
+        this._javascript,
+      )
+    }
 
-    // 插入global-config的配置
-    const start = htmlTemplate.indexOf('<style>')
-    const newStr = '<script>localStorage.setItem(\'doraemon_global_config\', \'https://raw.githubusercontent.com/doraemon-ai/4th-dimensional-pocket/main/config.json\')</script>'
-    return htmlTemplate.slice(0, start) + newStr + htmlTemplate.slice(start)
+    if (this._globalConfig) {
+      // 插入global-config的配置
+      const start = htmlTemplate.indexOf('<style>')
+      const newStr = `<script>localStorage.setItem('doraemon_global_config', '${this._globalConfig}')</script>`
+      return htmlTemplate.slice(0, start) + newStr + htmlTemplate.slice(start)
+    }
   }
 
   public resolveWebviewView(webviewView: vscode.WebviewView, context: vscode.WebviewViewResolveContext) {
