@@ -55,6 +55,11 @@
     "configuration": {
       "title": "DoraemonConfig",
       "properties": {
+        "doraemon.websiteUrl": {
+          "type": "string",
+          "default": "https://doraemon-ai.netlify.app/",
+          "description": "插件的资源地址"
+        },
         "doraemon.globalConfig": {
           "type": "string",
           "default": "https://raw.githubusercontent.com/doraemon-ai/4th-dimensional-pocket/main/config.json",
@@ -62,8 +67,8 @@
         },
         "doraemon.javascript": {
           "type": "string",
-          "default": "http://localhost:3000/static/js/bundle.js",
-          "description": "JS文件的地址"
+          "default": "",
+          "description": "JS文件的地址。开发时可用来Debug（http://localhost:3000/static/js/bundle.js）"
         }
       }
     }

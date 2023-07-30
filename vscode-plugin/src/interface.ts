@@ -5,8 +5,8 @@
  */
 export interface IContextMenu {
   label: string,
-  command: string,
-  callback: string
+  action: string,
+  expectation: string
 }
 
 export interface IMessageInfo {
@@ -20,5 +20,5 @@ export enum MessageType {
 }
 
 export enum Command {
-  getSelectedText = 'GET_SELECTED_TEXT'
+  getSelectedText = 'SYS_GET_SELECTED_TEXT'
 }

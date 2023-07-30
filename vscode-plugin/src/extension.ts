@@ -15,9 +15,13 @@ import { remove } from 'lodash'
 export function activate(context: vscode.ExtensionContext) {
   const contextMenuList: IContextMenu[] = []
 
-  axios.get<string, AxiosResponse<string>>('https://doraemon-ai.vercel.app/', { timeout: 3000 })
-    .then(({ data }) => {
-      const webviewProvider = createWebView(context, data, contextMenuList)
+  const config = vscode.workspace.getConfiguration('doraemon')
+  // 获取配置项中的文本
+  const websiteUrl = config.get('websiteUrl') as string ?? 'https://doraemon-ai.netlify.app'
+
+  axios.get<string, AxiosResponse<string>>(websiteUrl, { timeout: 3000 })
+    .then(({ data: htmlTemplate }) => {
+      const webviewProvider = createWebView(context, htmlTemplate, contextMenuList)
 
       registerWebView(context, webviewProvider)
 

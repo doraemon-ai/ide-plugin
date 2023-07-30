@@ -36,6 +36,8 @@ export class WebviewProvider implements vscode.WebviewViewProvider {
     this._javascript = config.get('javascript') as string
 
     this._htmlTemplate = this.modifyTemplate(htmlTemplate)
+
+    console.log('htmlTemplate', this._htmlTemplate)
     this._callback = registerCallback
   }
 
@@ -43,11 +45,12 @@ export class WebviewProvider implements vscode.WebviewViewProvider {
    * 修改html的模板内容
    */
   private modifyTemplate(htmlTemplate: string) {
-    if (this._javascript) {
+    if (true) {
       // 替换js文件
       htmlTemplate = htmlTemplate.replace(
-        'https://doraemon-ai.vercel.app/static/js/main.fe9fd396.js',
-        this._javascript,
+        'https://doraemon-ai.netlify.app/static/js/main.d800d32e.js',
+        'http://localhost:3000/static/js/bundle.js'
+        // this._javascript,
       )
     }
 
@@ -84,9 +87,11 @@ export class WebviewProvider implements vscode.WebviewViewProvider {
     })
   }
 
-  public receiveValues(callback: string, values: any) {
+  public receiveValues(label: string, action: string, expectation: string, values: any) {
     this._webview?.postMessage({
-      callback,
+      label,
+      action,
+      expectation,
       values,
       fileName: vscode.window.activeTextEditor?.document.fileName,
     })

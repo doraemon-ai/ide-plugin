@@ -30,7 +30,7 @@ export const getSelectText = (): string => {
 /**
  * 注册webview的provider
  */
-export const registerWebView = (context: vscode.ExtensionContext, provider: WebviewProvider)=>{
+export const registerWebView = (context: vscode.ExtensionContext, provider: WebviewProvider) => {
   const webviewDispose = vscode.window.registerWebviewViewProvider(
     'doraemon.webview',
     provider,
@@ -51,14 +51,13 @@ export const registerMenuList = (context: vscode.ExtensionContext, webview: Webv
     if (!curContextMenus.find(item => item.label === menu.label)) {
       curContextMenus.push(menu)
 
-
-      const disposable = vscode.commands.registerCommand(menu.command, (event) => {
+      const disposable = vscode.commands.registerCommand(menu.action, (event) => {
         // 执行右键菜单命令的逻辑
-        switch (menu.command) {
+        switch (menu.action) {
           case Command.getSelectedText:
             const text = getSelectText()
             if (text) {
-              webview.receiveValues(menu.callback, text)
+              webview.receiveValues(menu.label, menu.action, menu.expectation, text)
             } else {
               vscode.window.showErrorMessage('未选中任何文本')
             }
@@ -80,7 +79,7 @@ export function registerRightMenu(context: vscode.ExtensionContext, contextMenus
   const disposable = vscode.commands.registerCommand('doraemon.rightMenu', () => {
     vscode.window.showQuickPick(contextMenus).then(selectionMenu => {
       if (selectionMenu) {
-        vscode.commands.executeCommand(selectionMenu.command)
+        vscode.commands.executeCommand(selectionMenu.action)
       }
     })
 
