@@ -19,16 +19,24 @@
         "title": "Doraemon"
       },
       {
-        "command": "doraemon.rightMenu",
+        "command": "doraemon.showContextMenu",
         "remark": "注册右键菜单的command",
         "title": "Doraemon AI"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "doraemon.showContextMenu",
+        "key": "ctrl+d",
+        "mac": "cmd+d",
+        "when": "editorTextFocus"
       }
     ],
     "menus": {
       "editor/context": [
         {
           "when": "editorTextFocus",
-          "command": "doraemon.rightMenu",
+          "command": "doraemon.showContextMenu",
           "remark": "当编辑框被选中时，显示右键菜单",
           "group": "AI"
         }

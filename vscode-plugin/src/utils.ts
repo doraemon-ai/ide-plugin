@@ -4,7 +4,7 @@
  * @date 2023/7/29
  */
 import * as vscode from 'vscode'
-import { Command, IContextMenu } from './interface'
+import { Action, Command, IContextMenu } from './interface'
 import { WebviewProvider } from './WebviewProvider'
 
 /**
@@ -54,7 +54,7 @@ export const registerMenuList = (context: vscode.ExtensionContext, webview: Webv
       const disposable = vscode.commands.registerCommand(menu.action, (event) => {
         // 执行右键菜单命令的逻辑
         switch (menu.action) {
-          case Command.getSelectedText:
+          case Action.getSelectedText:
             const text = getSelectText()
             if (text) {
               webview.receiveValues(menu.label, menu.action, menu.expectation, text)
@@ -76,7 +76,7 @@ export const registerMenuList = (context: vscode.ExtensionContext, webview: Webv
  * 注册主右键菜单
  */
 export function registerRightMenu(context: vscode.ExtensionContext, contextMenus: IContextMenu[]) {
-  const disposable = vscode.commands.registerCommand('doraemon.rightMenu', () => {
+  const disposable = vscode.commands.registerCommand(Command.showContextMenu, () => {
     vscode.window.showQuickPick(contextMenus).then(selectionMenu => {
       if (selectionMenu) {
         vscode.commands.executeCommand(selectionMenu.action)

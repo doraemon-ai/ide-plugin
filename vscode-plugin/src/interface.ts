@@ -19,6 +19,10 @@ export enum MessageType {
   unRegisterContextMenu = 'UNREGISTER_CONTEXT_MENU'
 }
 
-export enum Command {
+export enum Action {
   getSelectedText = 'SYS_GET_SELECTED_TEXT'
+}
+
+export enum Command {
+  showContextMenu = 'showContextMenu'
 }

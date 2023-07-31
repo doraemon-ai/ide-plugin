@@ -1,7 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode'
-import path from 'node:path'
+// import path from 'node:path'
 import { WebviewProvider } from './WebviewProvider'
 import { IContextMenu } from './interface'
 import { registerMenuList, registerWebView, registerRightMenu } from './utils'
