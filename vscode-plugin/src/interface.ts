@@ -20,7 +20,7 @@ export enum MessageType {
 }
 
 export enum Action {
-  getSelectedText = 'SYS_GET_SELECTED_TEXT'
+  getSelectedText = 'SYS_ACT:GET_SELECTED_TEXT'
 }
 
 export enum Command {
